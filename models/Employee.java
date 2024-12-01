@@ -33,4 +33,9 @@ public abstract class Employee {
     public String toCSVString() {
         return String.format("%s,%s,%s,%.2f",getId(),getName(),getRole(),getGrossSalary());
     }
+
+    public String getUsername() {
+        return getName();
+    }
+
 }
