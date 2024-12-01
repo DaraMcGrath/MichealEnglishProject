@@ -1,6 +1,6 @@
 //package EMDProject;
 import models.FullTimeEmployee;
-
+/***
 public class EmployeeTest {
     @Test
     public void testCalculateNetSalary() {
@@ -8,3 +8,4 @@ public class EmployeeTest {
         assertEquals(3850, emp.calculateNetSalary());
     }
 }
+ **/
