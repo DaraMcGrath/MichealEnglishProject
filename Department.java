@@ -27,14 +27,31 @@ public class Department {
         String EmpSalary = scanner.nextLine();
 
         boolean found = false;
-        for (String row : linesArray) {
+
+        for (int i = 0; i < linesArray.length; i++) {
+            String row = linesArray[i];
             String[] columns = row.split(",");
+
             if (columns.length >= 4 && columns[1].equals(EmpRole) && columns[3].equals(EmpSalary)) {
-                System.out.println("Matching row: " + row);
+                System.out.println("Current Salary" + row);
                 found = true;
+
+                if (i + 1 < linesArray.length) {
+                    String nextRow = linesArray[i + 1];
+                    String[] nextColumns = nextRow.split(",");
+
+                    if (nextColumns.length >= 4) {
+                        if (nextColumns[2].equals("1")) {
+                            System.out.println("Salary scale cap reached");
+                        } else {
+                            System.out.println("Promoted Salary}: " + nextRow);
+                        }
+                    }
+                }
                 break;
             }
         }
+
         if (!found) {
             System.out.println("No matching rows found for the given criteria.");
         }
