@@ -1,18 +1,19 @@
 package models;
 
 public abstract class Employee {
+    private final SalaryLookupSystem SalaryLookupSystem;
     private String id;
     private String name;
     private String role; // Full-time, Part-time
     private double grossSalary;
-    private SalaryLookupSystem lookupSystem;
+    //private SalaryLookupSystem salaryLookupSystem;
 
     public Employee(String id, String name, String role, double grossSalary) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.grossSalary = grossSalary;
-        this.lookupSystem = new SalaryLookupSystem("src/salary-scales.csv");
+        this.SalaryLookupSystem = new SalaryLookupSystem("src/salary-scales.csv");
     }
 
     public Employee(String data){
@@ -21,6 +22,7 @@ public abstract class Employee {
         this.id = dataArray[1];
         this.role = dataArray[2];
         this.grossSalary = Double.parseDouble(dataArray[3]);
+        this.SalaryLookupSystem = new SalaryLookupSystem("src/salary-scales.csv");
     }
 
     public abstract double calculateNetSalary();

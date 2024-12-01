@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+
 public class Payroll {
     public void generatePayslips(List<Employee> employees, String outputFile) {
         try (FileWriter writer = new FileWriter(outputFile)) {

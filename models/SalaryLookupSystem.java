@@ -24,6 +24,10 @@ class SalaryEntry {
 public class SalaryLookupSystem {
     private List<SalaryEntry> salaryData;
 
+    public SalaryLookupSystem() {
+        salaryData = new ArrayList<>();
+    }
+
     public SalaryLookupSystem(String csvFile) {
         salaryData = new ArrayList<>();
         loadCsvData(csvFile);
