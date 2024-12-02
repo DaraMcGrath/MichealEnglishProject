@@ -3,8 +3,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Department {
-    public static void main(String[] args) {
-        String filePath = "C:\\Users\\Myron Butler\\Downloads\\Micheal English Project\\Micheal English Project\\src\\salary-scales-csv.txt";
+    public static void department() {
+        String filePath = "salary-scales-csv.txt";
         ArrayList<String> linesList = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -44,7 +44,7 @@ public class Department {
                         if (nextColumns[2].equals("1")) {
                             System.out.println("Salary scale cap reached");
                         } else {
-                            System.out.println("Promoted Salary}: " + nextRow);
+                            System.out.println("Promoted Salary: " + nextRow);
                         }
                     }
                 }

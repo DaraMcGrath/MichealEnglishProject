@@ -10,20 +10,24 @@ import java.util.Scanner;
 
 public class MainApp {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Welcome to the UL Payroll System!");
-        System.out.println("1. Add Employee");
-        System.out.println("2. View Payslip");
-        System.out.println("3. Promote Employee");
-        System.out.println("4. Exit");
 
         boolean running = true;
 
         while (running) {
-            System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Clear the newline character
+            Scanner scanner = new Scanner(System.in);
+            int choice = 1;
+
+            System.out.println("Welcome to the UL Payroll System!");
+            System.out.println("1. Add Employee");
+            System.out.println("2. View Payslip");
+            System.out.println("3. Promote Employee");
+            System.out.println("4. Exit");
+
+            System.out.print("Choose an option: \n");
+            scanner.nextLine();
+            if(scanner.hasNextInt() )
+                choice = scanner.nextInt();
+
 
             switch (choice) {
                 case 1:
@@ -64,7 +68,8 @@ public class MainApp {
 
                 case 3:
                     // Promotion logic
-                    System.out.println("Feature not implemented yet!");
+                    System.out.println("Employee");
+                    Department.department();
                     break;
 
                 case 4:
@@ -75,9 +80,10 @@ public class MainApp {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
+            scanner.close();
         }
 
-        scanner.close();
+
     }
 
     public static Employee employeeData() {
