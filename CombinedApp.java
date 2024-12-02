@@ -13,6 +13,7 @@ public class CombinedApp {
         List<Employee> employees = new ArrayList<>();
         Admin admin = new Admin("admin", "admin123");
         HRUser hrUser = new HRUser("hr", "hr123");
+        Employee fulltimeEmployee = new FullTimeEmployee("1", "Myron", "Professor", true);
 
         Payroll payroll = new Payroll();
 
@@ -65,7 +66,7 @@ public class CombinedApp {
                 admin.addEmployee(employees, newEmployee);
                 CSVUtil writer = new CSVUtil();
                 try {
-                    writer.writeCSV("src/Employees.csv", newEmployee.toCSVString());
+                    writer.writeCSV("Employees.csv", newEmployee.toCSVString());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

@@ -73,8 +73,8 @@ public abstract class Employee {
         return "Name: " + name + ", Position: " + role + ", Full Time: " + (isFullTime ? "Yes" : "No");
     }
 
-    public boolean authenticate(String username, String password2) {
-        return this.name.equals(username) && this.password.equals(password2);
+    public boolean authenticate(String id, String password) {
+        return this.id.equals(id) && this.password.equals(password);
     }
 
 }
