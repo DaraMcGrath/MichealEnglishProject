@@ -1,99 +1,8 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-// Base Employee Class
-class Employee {
-    private String username;
-    private String password;
-    private String name;
-    private String position;
-    private boolean isFullTime;
-
-    public Employee(String username, String password, String name, String position, boolean isFullTime) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.position = position;
-        this.isFullTime = isFullTime;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isFullTime() {
-        return isFullTime;
-    }
-
-    public boolean authenticate(String username, String password) {
-        return this.username.equals(username) && this.password.equals(password);
-    }
-
-    public String getDetails() {
-        return "Name: " + name + ", Position: " + position + ", Full Time: " + (isFullTime ? "Yes" : "No");
-    }
-}
-
-// Admin Class
-class Admin {
-    private String username;
-    private String password;
-
-    public Admin(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public boolean authenticate(String username, String password) {
-        return this.username.equals(username) && this.password.equals(password);
-    }
-
-    public void addEmployee(List<Employee> employees, Employee newEmployee) {
-        employees.add(newEmployee);
-        System.out.println("Employee added successfully: " + newEmployee.getUsername());
-    }
-}
-
-// HR User Class
-class HRUser {
-    private String username;
-    private String password;
-
-    public HRUser(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public boolean authenticate(String username, String password) {
-        return this.username.equals(username) && this.password.equals(password);
-    }
-
-    public void promoteEmployee(Employee employee) {
-        if (employee.isFullTime()) {
-            System.out.println("Promoting " + employee.getName() + "...");
-            System.out.println("Promotion successful!");
-        } else {
-            System.out.println("Cannot promote part-time employees.");
-        }
-    }
-}
-
-// Payroll Class
-class Payroll {
-    public void generatePayslips(List<Employee> employees, String fileName) {
-        System.out.println("Generating payslips and saving to file: " + fileName);
-        for (Employee employee : employees) {
-            System.out.println("Payslip for " + employee.getName() + ": " + employee.getDetails());
-        }
-    }
-}
-
-
-
+import models.*;
 
 
 public class CombinedApp {
@@ -104,8 +13,6 @@ public class CombinedApp {
         List<Employee> employees = new ArrayList<>();
         Admin admin = new Admin("admin", "admin123");
         HRUser hrUser = new HRUser("hr", "hr123");
-        employees.add(new Employee("john", "pass123", "John Doe", "Developer", true));
-        employees.add(new Employee("jane", "pass456", "Jane Smith", "Designer", false));
 
         Payroll payroll = new Payroll();
 
@@ -124,19 +31,45 @@ public class CombinedApp {
             scanner.nextLine(); // Consume newline
 
             if (choice == 1) {
-                System.out.print("Enter new employee username: ");
-                String empUsername = scanner.nextLine();
-                System.out.print("Enter password: ");
-                String empPassword = scanner.nextLine();
-                System.out.print("Enter name: ");
-                String name = scanner.nextLine();
-                System.out.print("Enter position: ");
-                String position = scanner.nextLine();
-                System.out.print("Is full-time? (true/false): ");
-                boolean isFullTime = scanner.nextBoolean();
+                System.out.println("Enter the employee type (1 = Full-Time, 2 = Part-Time): ");
+                int employeeType = scanner.nextInt();
+                scanner.nextLine(); // Clear the newline character
+                Employee newEmployee = null;
 
-                Employee newEmployee = new Employee(empUsername, empPassword, name, position, isFullTime);
+                System.out.println("Enter the employee ID: ");
+                String id = scanner.nextLine();
+
+                System.out.println("Enter the employee name: ");
+                String name = scanner.nextLine();
+
+                if (employeeType == 1) {
+                    // Full-Time Employee
+                    System.out.println("Enter the employee's Role: ");
+                    String role = scanner.nextLine();
+                    System.out.println("Enter the employee salary: ");
+                    double salary = scanner.nextDouble();
+                    newEmployee =  new FullTimeEmployee(id, name, role, salary);
+                    System.out.println("You have successfully added an employee ");
+
+                } else if (employeeType == 2) {
+                    // Part-Time Employee
+                    System.out.println("Enter the employee's hourly rate: ");
+                    double hourlyRate = scanner.nextDouble();
+                    newEmployee = new PartTimeEmployee(id);
+                    System.out.println("You have successfully added an employee ");
+
+                } else {
+                    System.out.println("Invalid employee type. Returning null.");
+                }
+
                 admin.addEmployee(employees, newEmployee);
+                CSVUtil writer = new CSVUtil();
+                try {
+                    writer.writeCSV("src/Employees.csv", newEmployee.toCSVString());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         } else if (hrUser.authenticate(username, password)) {
             System.out.println("Logged in as HR User");
@@ -157,6 +90,7 @@ public class CombinedApp {
                 } else {
                     System.out.println("Invalid selection.");
                 }
+
             }
         } else {
             // Employee login
@@ -171,5 +105,6 @@ public class CombinedApp {
                 System.out.println("Invalid credentials.");
             }
         }
+        scanner.close();
     }
 }

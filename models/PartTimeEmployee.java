@@ -13,6 +13,8 @@ public class PartTimeEmployee extends Employee {
         this.payClaimSubmitted = payClaimSubmitted;
     }
 
+
+
     // Constructor to initialize from a CSV line
     public PartTimeEmployee(String csvLine) {
         super(csvLine); // Initializes id, name, role, and grossSalary from CSV
@@ -21,6 +23,14 @@ public class PartTimeEmployee extends Employee {
         this.hoursWorked = Integer.parseInt(data[5]);
         this.payClaimSubmitted = Boolean.parseBoolean(data[6]);
     }
+
+    public PartTimeEmployee(String empUsername, String name, String position, boolean isFullTime) {
+        // placeholder
+        super(empUsername, name, position, 23456789);
+
+    }
+
+
 
     @Override
     public double calculateNetSalary() {
@@ -38,4 +48,3 @@ public class PartTimeEmployee extends Employee {
                 super.toString(), hourlyRate, hoursWorked, payClaimSubmitted);
     }
 }
-
